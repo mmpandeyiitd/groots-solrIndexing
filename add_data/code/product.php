@@ -129,8 +129,7 @@ try {
             {
                 if($value['discount_per'] > 0)
                 {
-                    $effective_price = round($value['store_offer_price']) - (round($value['store_offer_price']) * round($value['discount_per']/100));
-                           
+                    $effective_price = $value['store_offer_price'] - ($value['store_offer_price'] * $value['discount_per']/100);
                 }
                 else
                 {
