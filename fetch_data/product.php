@@ -10,19 +10,36 @@ class PRODUCT extends REST
         if($count == 1)
         {
             $result = $object->productList_specialPrice($params);
-            if(count($result['response']['response']['docs']) > 0)
+            $record_found = $result['response']['response']['numFound'];
+            $product_arr;
+            if($record_found > 0)
             {
-                $product_arr = array();
-                foreach($result['response']['response']['docs'] as $val)
+                if(count($result['response']['response']['docs']) > 0)
                 {
-                    $product_arr[$val['subscribed_product_id']] = $val['store_offer_price'];
+                    $product_arr = array();
+                    foreach($result['response']['response']['docs'] as $val)
+                    {
+                        $product_arr[$val['subscribed_product_id']] = $val['store_offer_price'];
+                    }
+                    $params_new = array();
+                    unset($params['filter']);
+                    $params_new = $params;
+                    $params_new['filter']['subscribed_product_id'] = array_keys($product_arr);
+                    $result_new = $object->productList($params_new);
+                    foreach($result_new['response']['response']['docs'] as $key => $val)
+                    {
+                        $result_new['response']['response']['docs'][$key]['store_offer_price'] = $product_arr[$val['subscribed_product_id']];
+                    }
                 }
-                $params_new = array();
-                $params_new['filter']['subscribed_product_id'] = array_keys($product_arr);
-                $result_new = $object->productList($params_new);
-                foreach($result_new['response']['response']['docs'] as $key => $val)
+                else
                 {
-                    $result_new['response']['response']['docs'][$key]['store_offer_price'] = $product_arr[$val['subscribed_product_id']];
+                    $params_new = array();
+                    $params_new['filter']['subscribed_product_id'] = 0;
+                    $result_new = $object->productList($params_new);
+                    foreach($result_new['response']['response']['docs'] as $key => $val)
+                    {
+                        $result_new['response']['response']['docs'][$key]['store_offer_price'] = $product_arr[$val['subscribed_product_id']];
+                    }   
                 }
             }
             else
