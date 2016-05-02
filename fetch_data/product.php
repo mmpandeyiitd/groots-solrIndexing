@@ -26,6 +26,7 @@ class PRODUCT extends REST
                     $params_new = $params;
                     $params_new['filter']['subscribed_product_id'] = array_keys($product_arr);
                     $result_new = $object->productList($params_new);
+                    $result_new['response']['response']['numFound'] = $record_found;
                     foreach($result_new['response']['response']['docs'] as $key => $val)
                     {
                         $result_new['response']['response']['docs'][$key]['store_offer_price'] = $product_arr[$val['subscribed_product_id']];
@@ -36,6 +37,7 @@ class PRODUCT extends REST
                     $params_new = array();
                     $params_new['filter']['subscribed_product_id'] = 0;
                     $result_new = $object->productList($params_new);
+                    $result_new['response']['response']['numFound'] = $record_found;
                     foreach($result_new['response']['response']['docs'] as $key => $val)
                     {
                         $result_new['response']['response']['docs'][$key]['store_offer_price'] = $product_arr[$val['subscribed_product_id']];
