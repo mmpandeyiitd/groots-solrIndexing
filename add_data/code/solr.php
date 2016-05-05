@@ -38,7 +38,9 @@ class SOLR {
 			$document->subscribed_shipping_charges = (isset($index['subscribe_shipping_charge'])) ? $index['subscribe_shipping_charge'] : 0;
             $document->is_cod = (isset($index['is_cod'])) ? $index['is_cod'] : 0;
             $document->weight = (isset($index['weight'])) ? $index['weight'] : 0;
+            $document->weight_unit = (isset($index['weight_unit'])) ? $index['weight_unit'] : '';
             $document->length = (isset($index['length'])) ? $index['length'] : 0;
+            $document->length_unit = (isset($index['length_unit'])) ? $index['length_unit'] : '';
             $document->width = (isset($index['width'])) ? $index['width'] : 0;
             $document->height = (isset($index['height'])) ? $index['height'] : 0;
             $document->diameter = (isset($index['diameter'])) ? $index['diameter'] : 0;
