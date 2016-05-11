@@ -43,7 +43,7 @@ class SOLR {
             $document->length_unit = (isset($index['length_unit'])) ? $index['length_unit'] : '';
             $document->width = (isset($index['width'])) ? $index['width'] : 0;
             $document->height = (isset($index['height'])) ? $index['height'] : 0;
-            $document->diameter = (isset($index['diameter'])) ? $index['diameter'] : 0;
+            $document->diameter = (isset($index['diameter'])) ? $index['diameter'] : '';
             $document->grade = (isset($index['grade'])) ? $index['grade'] : '';
             $document->pack_size = (isset($index['pack_size'])) ? $index['pack_size'] : 0;
             $document->pack_unit = (isset($index['pack_unit'])) ? $index['pack_unit'] : '';
