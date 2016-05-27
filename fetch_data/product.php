@@ -51,7 +51,7 @@ class PRODUCT extends REST
         }
         else
         {
-            unset($params['filter']['retailer_id']);
+            $params['filter']['subscribed_product_id'] = 0;
             $result_new = $object->productList($params);
         }
         
