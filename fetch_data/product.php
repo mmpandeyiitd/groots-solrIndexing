@@ -23,6 +23,8 @@ class PRODUCT extends REST
                     }
                     $params_new = array();
                     unset($params['filter']);
+                    unset($params['page']);
+                    unset($params['limit']);
                     $params_new = $params;
                     $params_new['filter']['subscribed_product_id'] = array_keys($product_arr);
                     $result_new = $object->productList($params_new);
