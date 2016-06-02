@@ -31,7 +31,9 @@ class PRODUCT extends REST
                     $result_new['response']['response']['numFound'] = $record_found;
                     foreach($result_new['response']['response']['docs'] as $key => $val)
                     {
-                        $result_new['response']['response']['docs'][$key]['store_offer_price'] = $product_arr[$val['subscribed_product_id']];
+                        if($product_arr[$val['subscribed_product_id']] > 0){
+                            $result_new['response']['response']['docs'][$key]['store_offer_price'] = $product_arr[$val['subscribed_product_id']];    
+                        }
                     }
                 }
                 else

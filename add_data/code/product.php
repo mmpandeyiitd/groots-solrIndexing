@@ -133,7 +133,7 @@ try {
                 }
                 else
                 {
-                    $effective_price = round($value['effective_price']);
+                    $effective_price = $value['effective_price'];
                 }
                 $sp_allData[$key]['store_offer_price'] = $effective_price;
                 $update_ids[] = $value['id'];
