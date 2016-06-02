@@ -45,8 +45,8 @@ try {
                         $allData[$key]['thumb_url'][] = BASEMEDIAURL . THUMBPRODUCTPATH . $thumbUrl;
                     }
                 } else {
-                    $allData[$key]['media_url'][] = BASEMEDIAURL . PRODUCTPATH . "supp_noimage-pdp.jpg";
-                    $allData[$key]['thumb_url'][] = BASEMEDIAURL . THUMBPRODUCTPATH . "supp_noimage.jpg";
+                    $allData[$key]['media_url'][] = BASEMEDIAURL . PRODUCTPATH . "noimage-pdp.jpg";
+                    $allData[$key]['thumb_url'][] = BASEMEDIAURL . THUMBPRODUCTPATH . "noimage.jpg";
                 }
                 
                 if (isset($allData[$key]['thumb_url']['0']) AND ! empty($allData[$key]['thumb_url']['0']) AND $default_media_thumb_url !='') {
