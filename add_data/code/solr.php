@@ -34,7 +34,7 @@ class SOLR {
             $document->base_product_id = $index['base_product_id'];
             $document->store_id = $index['store_id'];
             $document->store_price = $index['store_price'];
-            $document->store_offer_price = (isset($index['store_offer_price'])) ? round($index['store_offer_price']) : 0;
+            $document->store_offer_price = (isset($index['store_offer_price'])) ? ($index['store_offer_price']) : 0;
 			$document->subscribed_shipping_charges = (isset($index['subscribe_shipping_charge'])) ? $index['subscribe_shipping_charge'] : 0;
             $document->is_cod = (isset($index['is_cod'])) ? $index['is_cod'] : 0;
             $document->weight = (isset($index['weight'])) ? $index['weight'] : 0;
