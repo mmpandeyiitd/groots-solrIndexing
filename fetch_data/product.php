@@ -9,6 +9,11 @@ class PRODUCT extends REST
 
         if($count == 1)
         {
+            if(isset($params['sort']))
+            {
+                $sort = $params['sort'];    
+                unset($params['sort']);
+            }
             $result = $object->productList_specialPrice($params);
             $record_found = $result['response']['response']['numFound'];
             $product_arr;
@@ -26,6 +31,9 @@ class PRODUCT extends REST
                     unset($params['page']);
                     unset($params['limit']);
                     $params_new = $params;
+                    if($sort){
+                        $params_new['sort'] = $sort;
+                    }
                     $params_new['filter']['subscribed_product_id'] = array_keys($product_arr);
                     $result_new = $object->productList($params_new);
                     $result_new['response']['response']['numFound'] = $record_found;
