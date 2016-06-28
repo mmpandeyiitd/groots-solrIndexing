@@ -50,7 +50,7 @@ function getCategoryByBaseProductId($id) {
 
 function getStoreDetailByProductId($id) {
     $Arr = array();
-    $sql = "SELECT store_front_id FROM linesheet_products_mapping WHERE base_product_id=" . $id;
+    $sql = "SELECT store_front_id FROM store_front_products_mapping WHERE base_product_id=" . $id;
     $result = mysql_query($sql);
     $count = mysql_num_rows($result);
     if ($count) {
