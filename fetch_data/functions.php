@@ -59,7 +59,8 @@ class FUNCTIONS{
             $stats_fields = $this->stats();
             $sort_fileds = '';
             if (!empty($params['sort'])) {
-                $sort_fileds = $this->sorting($params['sort']);
+                //$sort_fileds = $this->sorting($params['sort']);
+                $sort_fileds = 'title asc';
             } else {
                 $sort_fileds = 'title asc';
             }
