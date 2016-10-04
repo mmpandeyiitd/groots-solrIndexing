@@ -61,7 +61,7 @@ class FUNCTIONS{
             if (!empty($params['sort'])) {
                 $sort_fileds = $this->sorting($params['sort']);
             } else {
-                $sort_fileds = 'subscribed_product_id asc';
+                $sort_fileds = 'title asc';
             }
             if (!empty($params['limit'])) {
                 $rows = $params['limit'];
