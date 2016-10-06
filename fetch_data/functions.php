@@ -122,9 +122,11 @@ class FUNCTIONS{
             
             $sort_fileds = '';
             if (!empty($params['sort'])) {
-                $sort_fileds = $this->sorting($params['sort']);
+                //$sort_fileds = $this->sorting($params['sort']);
+                $sort_fileds = 'title asc';
             } else {
-                $sort_fileds = 'subscribed_product_id asc';
+                //$sort_fileds = 'subscribed_product_id asc';
+                $sort_fileds = 'title asc';
             }
             if (!empty($params['limit'])) {
                 $rows = $params['limit'];
@@ -161,6 +163,7 @@ class FUNCTIONS{
             $parameters = CONFIG::SOLR_AUTO_SUGGEST_PARAM;
             $start = 0;
             $rows = 10;
+            $sort_fileds = 'title asc';
             if (!empty($params['q'])) {
                 if ($query_condition == "*:*") {
                     $query_condition = '';
@@ -168,7 +171,7 @@ class FUNCTIONS{
                 $query_condition = $this->default_Search($params['q'], $query_condition);
             }
             //Complete Solr Url With Parameter
-            $url = $url . "select?q=" . urlencode($query_condition) . "&start=" . $start . "&rows=" . $rows . "&fl=" . $parameters . "&group=true&group.field=title&group.format=simple&wt=json&indent=true";
+            $url = $url . "select?q=" . urlencode($query_condition) . "&start=" . $start . "&rows=" . $rows . "&fl=" . $parameters . "&group=true&group.field=title".urlencode($sort_fileds) ."&group.format=simple&wt=json&indent=true";
 
             $product_list = $this->httpGet($url);
 
@@ -355,7 +358,7 @@ class FUNCTIONS{
             $facets_fields = $this->facets();
             $group_field   = '&group.field=store_id';
             $sort_fileds = '';
-            $sort_fileds = 'subscribed_product_id asc';
+            $sort_fileds = 'title asc';
             if (!empty($params['limit'])) {
                 $rows = $params['limit'];
             }
@@ -415,7 +418,7 @@ class FUNCTIONS{
             $facets_fields = $this->facets();
             $group_field   = '&group.field=store_id';
             $sort_fileds = '';
-            $sort_fileds = 'subscribed_product_id asc';
+            $sort_fileds = 'title asc';
             if (!empty($params['limit'])) {
                 $rows = $params['limit'];
             }

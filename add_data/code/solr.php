@@ -203,6 +203,7 @@ class SOLR {
             $document->retailer_id = (int)$index['retailer_id']; 
             $document->store_offer_price = (isset($index['store_offer_price'])) ? $index['store_offer_price'] : 0;
             $document->created_at = gmdate('Y-m-d\TH:i:s\Z', strtotime($index['created_date']));
+            $document->title = (isset($index['title'])) ? utf8_encode(trim($index['title'])) : '';
             $documents[] = $document;
         }
         try {
