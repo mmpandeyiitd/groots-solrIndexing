@@ -19,7 +19,7 @@ function getALLProductList() {
 
 function getALLProductList_sp() {
     $Arr = array();
-    $sql = "SELECT spsbl.id, rpq.id as uniq_id, rpq.retailer_id, rpq.subscribed_product_id, rpq.effective_price, rpq.discount_per, rpq.created_at, sp.store_offer_price, bp.title FROM special_price_solr_back_log as spsbl LEFT JOIN retailer_product_quotation as rpq on spsbl.id = rpq.id LEFT JOIN subscribed_product as sp on rpq.subscribed_product_id = sp.subscribed_product_id JOIN base_product bp on bp.base_product_id=sp.base_product_id";
+    $sql = "SELECT spsbl.id, rpq.id as uniq_id, rpq.retailer_id, rpq.subscribed_product_id, rpq.effective_price, rpq.discount_per, rpq.created_at, sp.store_offer_price, bp.title FROM special_price_solr_back_log as spsbl LEFT JOIN retailer_product_quotation as rpq on spsbl.id = rpq.id LEFT JOIN subscribed_product as sp on rpq.subscribed_product_id = sp.subscribed_product_id LEFT JOIN base_product bp on bp.base_product_id=sp.base_product_id";
     $result = mysql_query($sql);
     $count = mysql_num_rows($result);
     if ($count) {
