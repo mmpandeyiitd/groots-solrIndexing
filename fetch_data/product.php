@@ -42,6 +42,9 @@ class PRODUCT extends REST
                         if($product_arr[$val['subscribed_product_id']] > 0){
                             $result_new['response']['response']['docs'][$key]['store_offer_price'] = $product_arr[$val['subscribed_product_id']];    
                         }
+                        if ( $result_new['response']['response']['docs'][$key]['store_offer_price'] == 0){
+                        $result_new['response']['response']['docs'][$key]['out_of_stock'] = true ;
+                       }
                     }
                 }
                 else
@@ -53,6 +56,9 @@ class PRODUCT extends REST
                     foreach($result_new['response']['response']['docs'] as $key => $val)
                     {
                         $result_new['response']['response']['docs'][$key]['store_offer_price'] = $product_arr[$val['subscribed_product_id']];
+                        if ( $result_new['response']['response']['docs'][$key]['store_offer_price'] == 0){
+                         $result_new['response']['response']['docs'][$key]['out_of_stock'] = true ;
+                        }
                     }   
                 }
             }
