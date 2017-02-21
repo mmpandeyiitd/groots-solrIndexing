@@ -9,6 +9,9 @@ try {
     $deletedAllIds = '';
     $updatedData = $deletedData = array();
     $allData = getALLProductList();
+    $sampleData = getSampleProductPriceRange();
+    //echo "<pre>";
+    //print_r($sampleData);
     if ($allData) {
         foreach ($allData as $key => $value) {
             $deletedAllIds .= $value['subscribed_product_id'] . ",";
@@ -89,6 +92,12 @@ try {
                 {
                         $allData[$key]['configurable_with'] = $color = $size = null;
                 }
+                if($value['is_sample'] == 1){
+                    if(isset($sampleData[$value['base_product_id']])){
+                        $allData[$key]['min_price'] = $sampleData[$value['base_product_id']]['min_price'];
+                        $allData[$key]['max_price'] = $sampleData[$value['base_product_id']]['max_price'];
+                    }
+                }
                 $allData[$key]['subscribed_product_id'] = $value['subscribed_product_id'];
                 $allData[$key]['id'] = $value['subscribed_product_id'];
                 $updatedData[] = $value['subscribed_product_id'];
@@ -97,7 +106,7 @@ try {
             }
         }
         $solr = new SOLR();
-        
+        //print_r($allData);die;
         if ($allData) {
             echo "\nUpdated subscribed product Ids : " . implode("\n", $updatedData);
             $solr->saveEntityIndexes($allData);

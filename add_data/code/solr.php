@@ -70,6 +70,9 @@ class SOLR {
             $document->store_logo = !empty($index['store_logo']) ? BASEMEDIAURL . $index['store_logo'] : '';
             $document->seller_name = (isset($index['seller_name'])) ? $index['seller_name'] : '';
             $document->business_address = (isset($index['business_address'])) ? $index['business_address'] : '';
+            $document->is_sample = (isset($index['is_sample'])) ? ($index['is_sample']) : 0;
+            $document->min_price = (isset($index['min_price'])) ? ($index['min_price']) : 0;
+            $document->max_price = (isset($index['max_price'])) ? ($index['max_price']) : 0;
 
             /* fix for separate fields for business address country,state,city and pincode */
             $document->business_address_country = (isset($index['business_address_country'])) ? $index['business_address_country'] : '';
@@ -86,12 +89,13 @@ class SOLR {
             $document->thumb_url = (isset($index['thumb_url'])) ? $index['thumb_url'] : array();
             $document->default_thumb_url = (isset($index['default_thumb_url'])) ? $index['default_thumb_url'] : '';
             $document->checkout_url = (isset($index['checkout_url'])) ? $index['checkout_url'] : '';
+
             $documents[] = $document;
         }
         try {
             $solrObj->addDocuments($documents);
             $solrObj->commit();
-            $solrObj->optimize();
+            //$solrObj->optimize();
         } catch (Exception $ex) {
             $url = SOLRURL . "admin/cores?action=RELOAD&core=collection_groots_prod";
             //echo $url;

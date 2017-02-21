@@ -4,7 +4,9 @@ require_once('connection.php');
 
 function getALLProductList() {
     $Arr = array();
-    $sql = "SELECT sp.subscribed_product_id, sp.base_product_id, sp.store_id, sp.store_price, sp.store_offer_price, sp.weight, sp.weight_unit, sp.length, sp.length_unit, sp.width, sp.height, sp.status AS subscribed_product_status, sp.diameter, bp.grade, sp.created_date as created_at, sp.modified_date as modified_at, sp.quantity, sp.is_cod, sp.sku, bp.base_product_id, bp.title, bp.description, bp.color, bp.pack_size, bp.pack_unit, bp.minimum_order_quantity, bp.tags, bp.specofic_keys as specific_key, bp.size, bp.is_configurable, bp.configurable_with, bp.status AS base_product_status, st.store_id, st.store_name, st.store_details, st.store_logo, st.seller_name, st.email, st.business_address, st.business_address_country, st.business_address_state, st.business_address_city, st.business_address_pincode, st.mobile_numbers, st.telephone_numbers, st.created_date AS store_create_date, st.status AS store_status, sp.subscribe_shipping_charge, 0 AS store_tax_per FROM subscribed_product sp INNER JOIN base_product bp ON bp.base_product_id = sp.base_product_id INNER JOIN store st ON st.store_id = sp.store_id INNER JOIN solr_back_log sbl ON sbl.subscribed_product_id = sp.subscribed_product_id where bp.grade not in ('Parent', 'Unsorted') or bp.grade is null";
+    $sql = "SELECT sp.subscribed_product_id, sp.base_product_id, sp.store_id, sp.store_price, sp.store_offer_price, sp.weight, sp.weight_unit, sp.length, sp.length_unit, sp.width, sp.height, sp.status AS subscribed_product_status, sp.diameter, bp.grade, sp.created_date as created_at, sp.modified_date as modified_at, sp.quantity, sp.is_cod, sp.sku, bp.base_product_id, bp.title, bp.description, bp.color, bp.pack_size, bp.pack_unit, bp.minimum_order_quantity, bp.tags, bp.specofic_keys as specific_key, bp.size, bp.is_configurable, bp.configurable_with, bp.status AS base_product_status, bp.is_sample, st.store_id, st.store_name, st.store_details, st.store_logo, st.seller_name, st.email, st.business_address, st.business_address_country, st.business_address_state, st.business_address_city, st.business_address_pincode, st.mobile_numbers, st.telephone_numbers, st.created_date AS store_create_date, st.status AS store_status, sp.subscribe_shipping_charge, 0 AS store_tax_per FROM subscribed_product sp INNER JOIN base_product bp ON bp.base_product_id = sp.base_product_id INNER JOIN store st ON st.store_id = sp.store_id LEFT JOIN solr_back_log sbl ON sbl.subscribed_product_id = sp.subscribed_product_id where bp.grade not in ( 'Unsorted') or bp.grade is null";
+    //bp.base_product_id=1713";
+    // "bp.grade not in ( 'Unsorted') or bp.grade is null";
     $result = mysql_query($sql);
     $count = mysql_num_rows($result);
     if ($count) {
@@ -30,6 +32,37 @@ function getALLProductList_sp() {
     } else {
         return $Arr;
     }
+}
+
+function getSampleProductPriceRange(){
+
+    $Arr = array();
+    $sql = "SELECT  bp.parent_id as bp_id, min(sp.store_offer_price) as min_price, max(sp.store_offer_price) as max_price from cb_dev_groots.base_product bp join cb_dev_groots.subscribed_product sp on sp.base_product_id=bp.base_product_id  join cb_dev_groots.base_product bp1 on bp1.base_product_id = bp.parent_id where bp.parent_id > 0 and bp1.is_sample = 1 group by bp.parent_id";
+    $result = mysql_query($sql);
+    $count = mysql_num_rows($result);
+    if ($count) {
+        while ($dataArr = mysql_fetch_assoc($result)) {
+            $tmp = array();
+            $tmp['min_price'] = $dataArr['min_price'];
+            $tmp['max_price'] = $dataArr['max_price'];
+            $Arr[$dataArr['bp_id']] = $tmp;
+        }
+    }
+
+    $sql1 = "SELECT  bp.base_product_id as bp_id, sp.store_offer_price as min_price, sp.store_offer_price as max_price from cb_dev_groots.base_product bp join cb_dev_groots.subscribed_product sp on sp.base_product_id=bp.base_product_id where bp.parent_id is null and bp.is_sample =1";
+    $result1 = mysql_query($sql1);
+    $count1 = mysql_num_rows($result1);
+    if ($count1) {
+        while ($dataArr1 = mysql_fetch_assoc($result1)) {
+            $tmp = array();
+            $tmp['min_price'] = $dataArr1['min_price'];
+            $tmp['max_price'] = $dataArr1['max_price'];
+            $Arr[$dataArr1['bp_id']] = $tmp;
+        }
+    }
+
+    return $Arr;
+
 }
 
 function getCategoryByBaseProductId($id) {
